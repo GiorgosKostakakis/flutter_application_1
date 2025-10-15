@@ -15,7 +15,7 @@ Widget build(BuildContext context) {
     home: Scaffold(
       appBar: AppBar(title: const Text('Sandwich Counter')),
       body: const Center(
-        child: Text('Welcome to the Sandwich Shop!'),
+        child: OrderItemDisplay(5, 'Footlong'),
         
       ),
     ),
