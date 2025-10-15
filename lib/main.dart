@@ -16,6 +16,7 @@ Widget build(BuildContext context) {
       appBar: AppBar(title: const Text('Sandwich Counter')),
       body: const Center(
         child: Text('Welcome to the Sandwich Shop!'),
+        
       ),
     ),
   );
@@ -29,7 +30,7 @@ class OrderItemDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('This is a placeholder for OrderItemDisplay');
+    return Text('$quantity $itemType sandwich(es): ${'🥪' * quantity}');
   }
 }
 
