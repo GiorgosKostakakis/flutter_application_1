@@ -21,7 +21,7 @@ class App extends StatelessWidget {
               children: [
                 Container(
                   color: Colors.blue,
-                  width: 300,
+                  width: 250,
                   height: 100,
                   child: const Center(
                     child: OrderItemDisplay(2, 'footlong'),
@@ -29,7 +29,15 @@ class App extends StatelessWidget {
                 ),
                 Container(
                   color: Colors.blue,
-                  width: 300,
+                  width: 250,
+                  height: 100,
+                  child: const Center(
+                    child: OrderItemDisplay(4, 'footlong'),
+                  ),
+                ),
+                Container(
+                  color: Colors.blue,
+                  width: 250,
                   height: 100,
                   child: const Center(
                     child: OrderItemDisplay(4, 'footlong'),
