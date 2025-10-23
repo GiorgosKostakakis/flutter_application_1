@@ -60,13 +60,33 @@ Widget build(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: _increaseQuantity,
-                child: const Text('Add'),
-              ),
-              ElevatedButton(
-                onPressed: _decreaseQuantity,
-                child: const Text('Remove'),
-              ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.green, // button color
+    foregroundColor: Colors.white, // text/icon color
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    textStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  onPressed: _increaseQuantity,
+  child: const Text('Add'),
+),
+
+ElevatedButton(
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.redAccent,
+    foregroundColor: Colors.white,
+    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    textStyle: const TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  onPressed: _decreaseQuantity,
+  child: const Text('Remove'),
+),
+
             ],
           ),
         ],
