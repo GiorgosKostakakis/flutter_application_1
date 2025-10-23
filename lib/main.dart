@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 void main() {
-    runApp(const App());
-
+  runApp(const App());
 }
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -14,43 +13,34 @@ class App extends StatelessWidget {
       title: 'Sandwich Shop App',
       home: Scaffold(
         appBar: AppBar(title: const Text('Sandwich Counter')),
-        body:   Column(
-          children:[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  color: Colors.blue,
-                  width: 250,
-                  height: 100,
-                  child: const Center(
-                    child: OrderItemDisplay(2, 'footlong'),
+        // The bit that you need to update starts from here
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const OrderItemDisplay(5, 'Footlong'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => print('Add button pressed!'),
+                    child: const Text('Add'),
                   ),
-                ),
-                Container(
-                  color: Colors.blue,
-                  width: 250,
-                  height: 100,
-                  child: const Center(
-                    child: OrderItemDisplay(4, 'footlong'),
+                  ElevatedButton(
+                    onPressed: () => print('Remove button pressed!'),
+                    child: const Text('Remove'),
                   ),
-                ),
-                Container(
-                  color: Colors.blue,
-                  width: 250,
-                  height: 100,
-                  child: const Center(
-                    child: OrderItemDisplay(4, 'footlong'),
-                  ),
-                ),
-              ]
-            )
-        ],
+                ],
+              ),
+            ],
+          ),
+        ),
+        // The bit that you need to update ends here
       ),
-    ),
     );
   }
 }
+
 class OrderItemDisplay extends StatelessWidget {
   final String itemType;
   final int quantity;
@@ -133,8 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(('welcome to my sandwich app'),
-            style: TextStyle(fontWeight: FontWeight.bold))
-
+                style: TextStyle(fontWeight: FontWeight.bold))
           ],
         ),
       ),
