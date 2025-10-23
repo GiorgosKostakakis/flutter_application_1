@@ -61,15 +61,18 @@ class _OrderScreenState extends State<OrderScreen> {
                   MainAxisAlignment.center, // pushes buttons to edges
               children: [
                 StyledButton(
-                  text: 'Remove',
+                  text: 'remove',
                   onPressed: _decreaseQuantity,
-                  backgroundColor: Colors.redAccent,
+                  enabled: _quantity > 0,
+                  backgroundColor: Colors.red,
                 ),
+
                 const SizedBox(
                     width: 20), // small gap (for safety on small screens)
                 StyledButton(
                   text: 'Add',
                   onPressed: _increaseQuantity,
+                  enabled: _quantity < widget.maxQuantity,
                   backgroundColor: Colors.green,
                 ),
               ],
@@ -88,6 +91,8 @@ class StyledButton extends StatelessWidget {
   final Color textColor; // Text color
   final EdgeInsetsGeometry padding; // Optional padding
 
+  final bool enabled;
+
   const StyledButton({
     super.key,
     required this.text,
@@ -95,21 +100,17 @@ class StyledButton extends StatelessWidget {
     this.backgroundColor = Colors.blue,
     this.textColor = Colors.white,
     this.padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+    this.enabled = true, // new
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
-        foregroundColor: textColor,
-        padding: padding,
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
+        backgroundColor: enabled ? backgroundColor : Colors.grey,
+        foregroundColor: Colors.white,
       ),
-      onPressed: onPressed,
+      onPressed: enabled ? onPressed : null,
       child: Text(text),
     );
   }
