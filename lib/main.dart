@@ -29,8 +29,8 @@ class OrderScreen extends StatefulWidget {
 
 class _OrderScreenState extends State<OrderScreen> {
   int _quantity = 0;
-   String _selectedType = 'Footlong';
-
+  String _selectedType = 'Footlong';
+  String _notes = '';
 
   void _increaseQuantity() {
     if (_quantity < widget.maxQuantity) {
@@ -70,9 +70,27 @@ class _OrderScreenState extends State<OrderScreen> {
               _quantity,
               _selectedType,
             ),
+            const SizedBox(height: 20),
+            
+            // ADD THIS SIMPLE TEXTFIELD FOR NOTES
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40.0),
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: 'Add special requests...',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _notes = value;
+                  });
+                },
+              ),
+            ),
+            
+            const SizedBox(height: 20),
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // pushes buttons to edges
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 StyledButton(
                   text: 'remove',
@@ -80,9 +98,7 @@ class _OrderScreenState extends State<OrderScreen> {
                   enabled: _quantity > 0,
                   backgroundColor: Colors.red,
                 ),
-
-                const SizedBox(
-                    width: 20), // small gap (for safety on small screens)
+                const SizedBox(width: 20),
                 StyledButton(
                   text: 'Add',
                   onPressed: _increaseQuantity,
@@ -97,7 +113,6 @@ class _OrderScreenState extends State<OrderScreen> {
     );
   }
 }
-
 class StyledButton extends StatelessWidget {
   final String text; // Button label
   final VoidCallback onPressed; // Callback when clicked
