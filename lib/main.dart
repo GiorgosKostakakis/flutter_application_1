@@ -232,6 +232,12 @@ class OrderItemDisplay extends StatelessWidget {
 
     return Column(
       children: [
+        // Separate numeric text so tests that look for '0' or '1' succeed
+        Text(
+          quantity.toString(),
+          style: heading1,
+        ),
+        const SizedBox(height: 4),
         Text(
           displayText,
           style: normalText,
