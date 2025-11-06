@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:sandwich_shop/repositories/order_repository.dart';
 
 enum BreadType { white, wheat, wholemeal }
 
@@ -31,7 +32,7 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  int _quantity = 0;
+  OrderRepository? _orderRepository;
   final TextEditingController _notesController = TextEditingController();
   bool _isFootlong = true;
   BreadType _selectedBreadType = BreadType.white;
@@ -39,6 +40,7 @@ class _OrderScreenState extends State<OrderScreen> {
   @override
   void initState() {
     super.initState();
+  _orderRepository = OrderRepository(maxQuantity: widget.maxQuantity);
     _notesController.addListener(() {
       setState(() {});
     });
@@ -51,19 +53,15 @@ class _OrderScreenState extends State<OrderScreen> {
   }
 
   VoidCallback? _getIncreaseCallback() {
-    if (_quantity < widget.maxQuantity) {
-      return () {
-        setState(() => _quantity++);
-      };
+    if (_orderRepository != null && _orderRepository!.canIncrement) {
+      return () => setState(() => _orderRepository!.increment());
     }
     return null;
   }
 
   VoidCallback? _getDecreaseCallback() {
-    if (_quantity > 0) {
-      return () {
-        setState(() => _quantity--);
-      };
+    if (_orderRepository != null && _orderRepository!.canDecrement) {
+      return () => setState(() => _orderRepository!.decrement());
     }
     return null;
   }
@@ -116,7 +114,7 @@ class _OrderScreenState extends State<OrderScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             OrderItemDisplay(
-              quantity: _quantity,
+              quantity: _orderRepository?.quantity ?? 0,
               itemType: sandwichType,
               breadType: _selectedBreadType,
               orderNote: noteForDisplay,
