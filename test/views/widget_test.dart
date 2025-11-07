@@ -36,10 +36,10 @@ void main() {
     // Initially the app should display the item type as `footlong` (default)
     expect(find.text('0 white footlong sandwich(es): '), findsOneWidget);
 
-    // Find the Switch and toggle it
-    final switchFinder = find.byType(Switch);
-    expect(switchFinder, findsOneWidget);
-    await tester.tap(switchFinder);
+  // Find the size Switch (use a key because there are multiple Switch widgets)
+  final switchFinder = find.byKey(const Key('size_switch'));
+  expect(switchFinder, findsOneWidget);
+  await tester.tap(switchFinder);
     await tester.pumpAndSettle();
 
     // After toggling, the displayed item type should switch to `six-inch`
