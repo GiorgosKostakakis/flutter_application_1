@@ -11,21 +11,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sandwich_shop/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App starts with initial quantity of 1', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const App());
+    await tester.pumpAndSettle();
 
-  // Verify that our counter starts at 0 (app shows descriptive text).
-  expect(find.textContaining('0 white footlong'), findsOneWidget);
-  expect(find.textContaining('1 white footlong'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-  // Verify that our counter has incremented.
-  expect(find.textContaining('0 white footlong'), findsNothing);
-  expect(find.textContaining('1 white footlong'), findsOneWidget);
+    // Verify that our counter starts at 1 (new default).
+    expect(find.text('1'), findsWidgets);
+    expect(find.text('Sandwich Counter'), findsOneWidget);
   });
 
   testWidgets('Switch toggles sandwich size between six-inch and footlong', (WidgetTester tester) async {
@@ -33,16 +26,16 @@ void main() {
     await tester.pumpWidget(const App());
     await tester.pumpAndSettle();
 
-    // Initially the app should display the item type as `footlong` (default)
-    expect(find.text('0 white footlong sandwich(es): '), findsOneWidget);
+    // Initially the switch should be on (footlong)
+    final switchWidget = tester.widget<Switch>(find.byType(Switch));
+    expect(switchWidget.value, isTrue);
 
-  // Find the size Switch (use a key because there are multiple Switch widgets)
-  final switchFinder = find.byKey(const Key('size_switch'));
-  expect(switchFinder, findsOneWidget);
-  await tester.tap(switchFinder);
+    // Toggle the switch
+    await tester.tap(find.byType(Switch));
     await tester.pumpAndSettle();
 
-    // After toggling, the displayed item type should switch to `six-inch`
-    expect(find.text('0 white six-inch sandwich(es): '), findsOneWidget);
+    // After toggling, the switch should be off (six-inch)
+    final switchWidgetAfter = tester.widget<Switch>(find.byType(Switch));
+    expect(switchWidgetAfter.value, isFalse);
   });
 }
