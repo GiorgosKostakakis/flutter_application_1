@@ -256,6 +256,49 @@ class _OrderScreenState extends State<OrderScreen> {
                 label: 'Add to Cart',
                 backgroundColor: Colors.green,
               ),
+              const SizedBox(height: 30),
+              // Cart Summary
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.grey[400]!),
+                ),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Cart Summary',
+                      style: heading2,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Items in cart:', style: normalText),
+                        Text(
+                          '${_cart.totalQuantity}',
+                          style: heading2,
+                          key: const Key('cart_item_count'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Total Price:', style: normalText),
+                        Text(
+                          '£${_cart.totalPrice.toStringAsFixed(2)}',
+                          style: heading2,
+                          key: const Key('cart_total_price'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
             ],
           ),
