@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:sandwich_shop/views/main_scaffold.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('About Us', style: heading1),
-      ),
-      body: const Padding(
+    return MainScaffold(
+      title: 'About Us',
+      child: const Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
