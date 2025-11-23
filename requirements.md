@@ -269,3 +269,26 @@ Add a lightweight Profile screen where a user can view and edit simple profile f
 - No backend or persistence needed — form state may be local to the widget.
 - Keep styling consistent with `app_styles.dart` and re-use `StyledButton` for actions where appropriate.
 
+## Navigation & Drawer — Requirements (implemented changes)
+
+This file has been updated to reflect navigation-related work completed in the codebase. The following summarizes what was implemented during the recent changes and how it maps back to the requirements above.
+
+Implemented items
+- `MainScaffold` (`lib/views/main_scaffold.dart`) — a shared scaffold that centralizes AppBar and navigation. It provides:
+   - Hidden `Drawer` on narrow screens with an AppBar menu action.
+   - Permanent side navigation on wide screens (>= 900px).
+- Drawer navigation entries for About and Profile are wired to routes and use the `MainScaffold`.
+- `AboutScreen`, `ProfileScreen`, `CartScreen`, and `CheckoutScreen` now use `MainScaffold` so the Drawer is available consistently.
+- Reusable `StyledButton` extracted to `lib/views/styled_button.dart` and re-exported from `lib/main.dart` to retain compatibility with tests.
+- Widget tests added/updated: `test/views/profile_screen_test.dart` verifies navigation to Profile and the Save flow; existing cart tests still pass.
+
+Notes / remaining alignment tasks
+- The original Cart model is still index-based. The requirements recommend migrating to id-based `CartItem` with stable ids for robust undo/merge semantics. That migration remains outstanding.
+- Drawer keys: please confirm if you want the exact test keys (`nav_drawer_button`, `drawer_home`, `drawer_cart`, `drawer_about`, `drawer_profile`) added to every Drawer/ListTile. I added the Drawer and wiring, but some items may not yet have the exact test key names — I can update them to match the requirements precisely on request.
+
+Suggested next steps (to close the loop on requirements)
+1. Migrate `Cart` to id-based API (`cartItem.id`) and update UI/tests to rely on id-based keys.
+2. Promote `Cart` to app-level state (Provider/InheritedWidget) so Drawer-initiated Cart navigation can access the shared Cart instance.
+3. Add Drawer open/close tests and wide-screen permanent navigation tests as listed in the Navigation section above.
+
+
