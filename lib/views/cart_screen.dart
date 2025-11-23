@@ -4,6 +4,8 @@ import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/views/cart_item_row.dart';
 import 'package:sandwich_shop/views/edit_item_modal.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
+import 'package:sandwich_shop/views/checkout_screen.dart';
+import 'package:sandwich_shop/views/styled_button.dart';
 
 class CartScreen extends StatefulWidget {
   final Cart cart;
@@ -86,25 +88,111 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  Future<void> _navigateToCheckout() async {
+    if (widget.cart.items.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Your cart is empty'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CheckoutScreen(cart: widget.cart),
+      ),
+    );
+
+    if (result != null && mounted) {
+      setState(() {
+        widget.cart.clear();
+      });
+
+      final String orderId = result['orderId'] as String;
+      final String estimatedTime = result['estimatedTime'] as String;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Order $orderId confirmed! Estimated time: $estimatedTime'),
+          duration: const Duration(seconds: 4),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Your Cart')),
       body: _cart.items.isEmpty
-          ? const Center(child: Text('Your cart is empty'))
-          : ListView.builder(
-              itemCount: _cart.items.length,
-              itemBuilder: (context, index) {
-                final item = _cart.items[index];
-                return CartItemRow(
-                  item: item,
-                  index: index,
-                  onIncrement: _increment,
-                  onDecrement: _decrement,
-                  onRemove: _remove,
-                  onEdit: _edit,
-                );
-              },
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Your cart is empty'),
+                  const SizedBox(height: 20),
+                  StyledButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icons.arrow_back,
+                    label: 'Back to Order',
+                    backgroundColor: Colors.blue,
+                  ),
+                ],
+              ),
+            )
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _cart.items.length,
+                      itemBuilder: (context, index) {
+                        final item = _cart.items[index];
+                        return CartItemRow(
+                          item: item,
+                          index: index,
+                          onIncrement: _increment,
+                          onDecrement: _decrement,
+                          onRemove: _remove,
+                          onEdit: _edit,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Builder(
+                    builder: (BuildContext context) {
+                      final bool cartHasItems = widget.cart.items.isNotEmpty;
+                      if (cartHasItems) {
+                        return StyledButton(
+                          onPressed: _navigateToCheckout,
+                          icon: Icons.payment,
+                          label: 'Checkout',
+                          backgroundColor: Colors.orange,
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  StyledButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: Icons.arrow_back,
+                    label: 'Back to Order',
+                    backgroundColor: Colors.blue,
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
             ),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
@@ -113,10 +201,7 @@ class _CartScreenState extends State<CartScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Total: £${_cart.totalPrice.toStringAsFixed(2)}', style: heading2),
-            ElevatedButton(
-              onPressed: _cart.isEmpty ? null : () {},
-              child: const Text('Checkout'),
-            ),
+            const SizedBox.shrink(),
           ],
         ),
       ),
