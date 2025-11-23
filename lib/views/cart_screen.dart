@@ -6,6 +6,7 @@ import 'package:sandwich_shop/views/edit_item_modal.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/views/checkout_screen.dart';
 import 'package:sandwich_shop/views/styled_button.dart';
+import 'package:sandwich_shop/views/main_scaffold.dart';
 
 class CartScreen extends StatefulWidget {
   final Cart cart;
@@ -129,9 +130,9 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Your Cart')),
-      body: _cart.items.isEmpty
+    return MainScaffold(
+      title: 'Your Cart',
+      child: _cart.items.isEmpty
           ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -194,17 +195,6 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
             ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.grey[100],
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Total: £${_cart.totalPrice.toStringAsFixed(2)}', style: heading2),
-            const SizedBox.shrink(),
-          ],
-        ),
-      ),
     );
   }
 }
