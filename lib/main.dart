@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/models/cart.dart';
+import 'package:sandwich_shop/views/cart_screen.dart';
 
 void main() {
   runApp(const App());
@@ -295,6 +296,18 @@ class _OrderScreenState extends State<OrderScreen> {
                           key: const Key('cart_total_price'),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 12),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        key: const Key('view_cart_button'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => CartScreen(cart: _cart)));
+                        },
+                        child: const Text('View Cart'),
+                      ),
                     ),
                   ],
                 ),
