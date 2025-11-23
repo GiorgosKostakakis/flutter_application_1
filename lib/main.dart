@@ -4,6 +4,7 @@ import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/views/styled_button.dart';
+import 'package:sandwich_shop/views/about_screen.dart';
 export 'package:sandwich_shop/views/styled_button.dart';
 
 void main() {
@@ -15,9 +16,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Sandwich Shop App',
-      home: OrderScreen(maxQuantity: 5),
+      home: const OrderScreen(maxQuantity: 5),
+      routes: {
+        '/about': (context) => const AboutScreen(),
+      },
     );
   }
 }
