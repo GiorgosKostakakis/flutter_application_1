@@ -5,6 +5,7 @@ import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/views/cart_screen.dart';
 import 'package:sandwich_shop/views/styled_button.dart';
 import 'package:sandwich_shop/views/about_screen.dart';
+import 'package:sandwich_shop/views/profile_screen.dart';
 export 'package:sandwich_shop/views/styled_button.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
       home: const OrderScreen(maxQuantity: 5),
       routes: {
         '/about': (context) => const AboutScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }
@@ -318,7 +320,14 @@ class _OrderScreenState extends State<OrderScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: TextButton(
+                        key: const Key('profile_button'),
+                        onPressed: () => Navigator.pushNamed(context, '/profile'),
+                        child: const Text('Profile'),
+                      ),
+                    ),
             ],
           ),
         ),
