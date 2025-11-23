@@ -237,3 +237,35 @@ Equality helper
 ---
 
 File created as `requiremetns.md` at project root. Use the listed keys in tests and implement the Cart API as specified.
+
+## Profile Screen — Requirements & AI prompt
+
+### Overview
+Add a lightweight Profile screen where a user can view and edit simple profile fields (name, email, phone). No authentication or persistence is required for this exercise — the screen should validate inputs minimally and expose stable widget keys for testing.
+
+### Acceptance criteria
+- The Profile screen is reachable from the Order screen via a visible link/button with key `profile_button`.
+- The screen shows a header `Profile` and form fields for `Name`, `Email`, and `Phone` with keys `profile_name`, `profile_email`, and `profile_phone` respectively.
+- The `Save` button (key `profile_save`) validates the email format and shows a SnackBar `Profile saved` when the form is valid.
+- The `Cancel` button (key `profile_cancel`) returns to the previous screen without saving.
+
+### Test keys
+- `profile_button` — link on the Order screen that opens the Profile screen
+- `profile_name` — TextFormField for the user's name
+- `profile_email` — TextFormField for the user's email
+- `profile_phone` — TextFormField for the user's phone
+- `profile_save` — Save button
+- `profile_cancel` — Cancel button
+
+### Minimal validation
+- `Name`: non-empty
+- `Email`: basic regex/contains '@'
+- `Phone`: optional, allow digits and punctuation
+
+### AI Assistant Prompt (for implementation)
+"Implement a simple Profile screen for the Sandwich Shop app. Create `lib/views/profile_screen.dart` containing a `ProfileScreen` widget with a form (Name, Email, Phone) using `TextFormField`s and a `Save` and `Cancel` button. Add stable widget keys as specified above. Wire the `Save` button to validate (non-empty name, email contains '@') and show a SnackBar 'Profile saved' when valid, otherwise show inline validation errors. Add a route `/profile` in `MaterialApp` and add a visible `profile_button` on the Order screen that navigates to the profile route. Also write a widget test that taps the profile button, fills in valid values, taps Save, and asserts the SnackBar is shown." 
+
+### Notes
+- No backend or persistence needed — form state may be local to the widget.
+- Keep styling consistent with `app_styles.dart` and re-use `StyledButton` for actions where appropriate.
+
