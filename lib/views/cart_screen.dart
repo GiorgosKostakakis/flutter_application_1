@@ -3,7 +3,6 @@ import 'package:sandwich_shop/models/cart.dart';
 import 'package:sandwich_shop/models/sandwich.dart';
 import 'package:sandwich_shop/views/cart_item_row.dart';
 import 'package:sandwich_shop/views/edit_item_modal.dart';
-import 'package:sandwich_shop/views/app_styles.dart';
 import 'package:sandwich_shop/views/checkout_screen.dart';
 import 'package:sandwich_shop/views/styled_button.dart';
 import 'package:sandwich_shop/views/main_scaffold.dart';
